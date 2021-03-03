@@ -37,7 +37,7 @@ type ICrawler struct {
 
 // IServer represents the second-level Server field of IConfig
 type IServer struct {
-	Port             int16  `koanf:"port"`
+	Port             int    `koanf:"port"`
 	Hostname         string `koanf:"hostname"`
 	DatabaseLocation string `koanf:"database_location"`
 	MaxPayloadSize   int    `koanf:"max_payload_size"`

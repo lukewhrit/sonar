@@ -20,6 +20,7 @@ import (
 	"log"
 
 	"github.com/lukewhrit/sonar/internal/app/crawler"
+	"github.com/lukewhrit/sonar/internal/app/server"
 	"github.com/lukewhrit/sonar/internal/pkg/config"
 )
 
@@ -32,6 +33,10 @@ func init() {
 // Functions called here should power the general functionality of the app
 func main() {
 	crawler.Crawl()
+	handleError(server.Start(
+		config.Config.Server.Port,
+		config.Config.Server.Hostname,
+	))
 }
 
 // Simple utility function for handling errors, so that logic isn't repeated too much
