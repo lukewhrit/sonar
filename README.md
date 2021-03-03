@@ -1,5 +1,7 @@
 # Sonar
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/lukewhrit/sonar)](https://goreportcard.com/report/github.com/lukewhrit/sonar) <!-- build status --> [![GitHub](https://img.shields.io/github/license/lukewhrit/sonar)](https://github.com/lukewhrit/sonar/blob/main/LICENSE) [![GitHub issues](https://img.shields.io/github/issues-raw/lukewhrit/sonar)](https://github.com/lukewhrit/sonar/issues) [![GitHub commit activity](https://img.shields.io/github/commit-activity/w/lukewhrit/sonar)](https://github.com/lukewhrit/sonar/commits/main) [![Github Wiki](https://img.shields.io/badge/-wiki-blue)](https://github.com/lukewhrit/sonar/wiki)
+
 Sonar is a modern and privacy-focused search engine with a somewhat decentralized design. Sonar is in no way ready to be used by anyone in production.
 
 This repository includes the source code for the Sonar server, which in turn provides the essential components of Sonar: the crawler and the indexer. The crawler was created using [Colly](https://github.com/gocolly/colly) &mdash; a crawler and scraper framework. And the indexer was made with [Badger](https://github.com/dgraph-io/badger) &mdash; a fast and embedded key-value database in Go.
