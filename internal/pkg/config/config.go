@@ -16,10 +16,70 @@
 
 package config
 
+import (
+	"github.com/knadh/koanf"
+	"github.com/knadh/koanf/parsers/json"
+	"github.com/knadh/koanf/providers/file"
+	"github.com/knadh/koanf/providers/structs"
+)
+
+// IConfig is the actual type for the Config structure
+type IConfig struct {
+	Crawler ICrawler `koanf:"crawler"`
+	Server  IServer  `koanf:"server"`
+}
+
+// ICrawler represents the second-level Crawler field of IConfig
+type ICrawler struct {
+	SiteDepth   int `koanf:"site_depth"`
+	RunInterval int `koanf:"run_interval"`
+}
+
+// IServer represents the second-level Server field of IConfig
+type IServer struct {
+	Port             int16  `koanf:"port"`
+	Hostname         string `koanf:"hostname"`
+	DatabaseLocation string `koanf:"database_location"`
+	MaxPayloadSize   int    `koanf:"max_payload_size"`
+	Ratelimits       IRatelimits
+}
+
+// IRatelimits represents the third-level Ratelimits field of IServer
+type IRatelimits struct {
+	AllowedRequests int `koanf:"allowed_requests"`
+	ResetDuration   int `koanf:"reset_duration"`
+}
+
 // Config is the object struct for Sonar
-var Config struct{}
+var (
+	Config IConfig
+	k      = koanf.New(".")
+)
 
 // Load loads configuration from files in the `configs/` folder to Golang object structures
-func Load() {
+func Load(path string) error {
+	// Load default config values
+	k.Load(structs.Provider(IConfig{
+		Crawler: ICrawler{
+			SiteDepth:   3,  // Dictates how deep the crawler should go when searching for links
+			RunInterval: 90, // Dictates how often the crawler should run, in minutes
+		},
+		Server: IServer{
+			Port:             3321,
+			Hostname:         "0.0.0.0",
+			DatabaseLocation: "/var/badger", // Path corresponding to Badger database file location
+			MaxPayloadSize:   256,           // Maximum allowed size of request payloads in kilobytes
+			Ratelimits: IRatelimits{
+				AllowedRequests: 200,     // Allows 200 requests per 5 minutes (300k ms)
+				ResetDuration:   300_000, // This value is in milliseconds
+			},
+		},
+	}, "koanf"), nil)
 
+	// Load JSON configuration from file at `path`
+	if err := k.Load(file.Provider(path), json.Parser()); err != nil {
+		return err
+	}
+
+	return k.Unmarshal("", &Config)
 }

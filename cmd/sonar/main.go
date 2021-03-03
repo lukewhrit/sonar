@@ -17,9 +17,26 @@
 package main
 
 import (
+	"log"
+
 	"github.com/lukewhrit/sonar/internal/app/crawler"
+	"github.com/lukewhrit/sonar/internal/pkg/config"
 )
 
+// Code executed here should be for initialize and loading things used globally
+// throughout the app like configuration
+func init() {
+	handleError(config.Load("configs/sonar.json"))
+}
+
+// Functions called here should power the general functionality of the app
 func main() {
 	crawler.Crawl()
+}
+
+// Simple utility function for handling errors, so that logic isn't repeated too much
+func handleError(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
 }

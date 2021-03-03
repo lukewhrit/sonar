@@ -27,11 +27,8 @@ import (
 )
 
 var (
-	sites     []string
-	baseSites = []string{
-		"https://example.com",
-	}
-	c = colly.NewCollector(
+	sites []string
+	c     = colly.NewCollector(
 		colly.MaxDepth(4),
 		colly.Async(),
 	)
@@ -40,6 +37,23 @@ var (
 		"https",
 	}
 )
+
+func getSearchSites() ([]string, error) {
+	var result []string
+
+	filePath := "configs/sites.json"
+	data, err := ioutil.ReadFile(filePath)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal(data, &result); err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
 
 // Crawl uses Colly and crawls
 func Crawl() {
@@ -64,7 +78,13 @@ func Crawl() {
 		log.Println("error:", e, r.Request.URL)
 	})
 
-	for _, site := range baseSites {
+	searchSites, err := getSearchSites()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, site := range searchSites {
 		c.Visit(site)
 	}
 
