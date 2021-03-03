@@ -17,18 +17,9 @@
 package main
 
 import (
-	"log"
-
 	"github.com/lukewhrit/sonar/internal/app/crawler"
 )
 
-func handleError(err error) {
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
-}
-
 func main() {
-	handleError(crawler.Crawl())
+	crawler.Crawl()
 }
