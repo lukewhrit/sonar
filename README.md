@@ -1,10 +1,10 @@
 # Sonar
 
-Sonar is a modern and privacy-focused search engine with a SourceHut-style design. Sonar is in no way ready to be used by anyone in production.
+Sonar is a modern and privacy-focused search engine with a somewhat decentralized design. Sonar is in no way ready to be used by anyone in production.
 
-This repository includes the source code for a Sonar server, which in turn provides the essential components of Sonar: the crawler and the database. The crawler was created using Colly &mdash; a crawler and scraper framework. And the database uses Badger &mdash; a fast and embedded key-value database in Go.
+This repository includes the source code for the Sonar server, which in turn provides the essential components of Sonar: the crawler and the indexer. The crawler was created using [Colly](https://github.com/gocolly/colly) &mdash; a crawler and scraper framework. And the indexer was made with [Badger](https://github.com/dgraph-io/badger) &mdash; a fast and embedded key-value database in Go.
 
-A Sonar instance is searchable entirely by it's API. Simply by `POST`-ing to the search endpoint with a JSON object of keywords.
+A Sonar instance is usable entirely by it's API. Simply `POST` to the search endpoint with a JSON object of keywords and criteria and you will get a paginated array of results.
 
 The creation of Sonar was induced primarily by Drew DeVault's article ["We can do better than DuckDuckGo"](https://drewdevault.com/2020/11/17/Better-than-DuckDuckGo.html).
 
@@ -43,9 +43,9 @@ The rest of the documentation for Sonar is available on this repository's [Githu
 
 ## Contributing new features
 
-We're always looking for new volunteers for the project, we've got a lot to work and can definitely use help.
+We're always looking for new volunteers for the project, we've got a lot to work to do and can definitely use help.
 
-If you want to work on Sonar feel free to create a pull request, just make sure you read our contributing guide and follow its rules. More information and the guide are available in the [`CONTRIBUTING.md`](CONTRIBUTING.md) file.
+If you want to work on Sonar feel free to simply create a pull request, just make sure you have read our contributing guide and follow its rules. More information and the guide are available in the [`CONTRIBUTING.md`](CONTRIBUTING.md) file.
 
 ## License
 
