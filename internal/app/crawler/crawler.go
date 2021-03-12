@@ -18,7 +18,6 @@ package crawler
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"strings"
@@ -65,7 +64,6 @@ func Crawl() {
 		for _, protocol := range allowedProtocols {
 			if strings.HasPrefix(link, protocol) {
 				sites = append(sites, link)
-				fmt.Println(link)
 			} else {
 				return
 			}
